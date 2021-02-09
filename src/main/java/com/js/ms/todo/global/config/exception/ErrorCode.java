@@ -7,7 +7,7 @@ public enum ErrorCode {
 
     // Common
     // input type 예외
-    INVALID_INPUT_VALUE( "A001", "Binding Exception"),
+    INVALID_INPUT_VALUE( "A001"),
     // 미존재 데이터 예외
     NOT_FOUND_ROW("A002"),
     // 종복 예외
