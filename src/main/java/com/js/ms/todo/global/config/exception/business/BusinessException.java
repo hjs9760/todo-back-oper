@@ -18,4 +18,8 @@ public class BusinessException extends RuntimeException {
         super(message);
         this.errorCode = errorCode;
     }
+
+    public BusinessException(String message) {
+        super(message);
+    }
 }
