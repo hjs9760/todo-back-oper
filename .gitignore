@@ -38,3 +38,6 @@ out/
 
 ### schema.sql ###
 todo-schema.sql
+
+### my ignore ###
+src/main/resources/application.yml

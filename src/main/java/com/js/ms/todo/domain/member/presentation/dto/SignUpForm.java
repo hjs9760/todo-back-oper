@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -42,8 +43,9 @@ public class SignUpForm {
     @NotBlank
     private String email;
 
-    @NotNull
-    private LocalDateTime joinAt;
+    public static String generateEmailCheckToken() {
+        return UUID.randomUUID().toString();
+    }
 
 
 }

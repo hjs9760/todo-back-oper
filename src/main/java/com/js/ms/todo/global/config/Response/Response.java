@@ -7,6 +7,7 @@ import lombok.Getter;
 public class Response {
     private String code;
     private String message;
+    private Object data;
 
     // 실패
     public static Response of(ErrorCode errorCode, String message) {
@@ -34,6 +35,16 @@ public class Response {
 
         response.code = code;
         response.message = message;
+
+        return response;
+    }
+
+    public static Response of(String code, String message, Object data) {
+        Response response = new Response();
+
+        response.code = code;
+        response.message = message;
+        response.data = data;
 
         return response;
     }
