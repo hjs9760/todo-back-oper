@@ -17,6 +17,7 @@ public class MemberService {
 
     public Response save(Member member) {
         if(!ObjectUtils.isEmpty(memberRepository.save(member))) {
+            memberRepository.save(member);
             return Response.of("200", "성공적으로 회원가입 되었습니다.");
         } else {
             return Response.of(ErrorCode.MEMBER_SIGNUP_FAIL);

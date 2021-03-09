@@ -19,6 +19,8 @@ public enum ErrorCode {
     // Member
     // 회원가입 예외
     MEMBER_SIGNUP_FAIL("B00", "Member Signup Fail"),
+    // 회원가입 후 이메일 인증 예외
+    MEMBER_SIGNUP_EMAIL_FAIL("B001", "이메일 인증에 실패했습니다. \n다시 입력해 주세요."),
     // 인증 예외
     MEMBER_AUTHENTICATION_FAIL("B001", "Member Authentication Exception"),
     // 인가 예외

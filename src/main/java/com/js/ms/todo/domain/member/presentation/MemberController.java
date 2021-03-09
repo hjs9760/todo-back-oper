@@ -1,21 +1,22 @@
 package com.js.ms.todo.domain.member.presentation;
 
+import com.js.ms.todo.domain.member.application.MailService;
 import com.js.ms.todo.domain.member.application.MemberService;
 import com.js.ms.todo.domain.member.domain.Member;
+import com.js.ms.todo.domain.member.presentation.dto.EmailCheckForm;
 import com.js.ms.todo.domain.member.presentation.dto.SignInForm;
 import com.js.ms.todo.domain.member.presentation.dto.SignUpForm;
-import com.js.ms.todo.domain.member.presentation.dto.SignUpFormValidator;
 import com.js.ms.todo.global.config.Response.Response;
+import com.js.ms.todo.global.config.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping("/member")
@@ -23,15 +24,8 @@ import java.time.LocalDateTime;
 public class MemberController {
 
     private final MemberService memberService;
-    private final SignUpFormValidator signUpFormValidator;
-    private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
-
-
-    @InitBinder("signUpForm")
-    public void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(signUpFormValidator);
-    }
+    private final MailService mailService;
 
     @GetMapping("checkId")
     public boolean chekId(@RequestParam String userId) {
@@ -41,28 +35,33 @@ public class MemberController {
 
     @PostMapping("/signUp")
     public Response signUp(@Valid @RequestBody SignUpForm signUpForm, Errors errors) {
-        Member member =  Member.builder()
+        Member member = Member.builder()
                 .userId(signUpForm.getUserId())
                 .pw(passwordEncoder.encode(signUpForm.getPw()))
                 .name(signUpForm.getName())
                 .birth(signUpForm.getBirth())
                 .gender(signUpForm.getGender())
                 .email(signUpForm.getEmail())
+                .emailCheckToken(SignUpForm.generateEmailCheckToken())
                 .joinAt(LocalDateTime.now())
                 .build();
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(member.getEmail());
-        mailMessage.setSubject("Todolist, 회원 인증");
-        mailMessage.setText("이메일 체크를 부탁드립니다. token=" + member.generateEmailCheckToken()  + "?email=" + member.getEmail());
-        javaMailSender.send(mailMessage);
+        memberService.save(member);
 
-        return memberService.save(member);
+        return mailService.sendMail(member);
+    }
+
+    @PostMapping("/checkEmail")
+    public Response checkEmail(@Valid @RequestBody EmailCheckForm emailCheckForm) {
+        if (ObjectUtils.isEmpty(emailCheckForm.getEmailCheckToken()))
+            return Response.of(ErrorCode.INVALID_INPUT_VALUE, "이메일 인증코드값이 비어있습니다.");
+
+        return mailService.checkEmail(emailCheckForm);
     }
 
     @PostMapping("/signIn")
     public Response signIn(@Valid @RequestBody SignInForm signInForm, Errors errors) {
-        Member member =  Member.builder()
+        Member member = Member.builder()
                 .userId(signInForm.getUserId())
                 .pw(passwordEncoder.encode(signInForm.getPw()))
                 .build();
@@ -70,12 +69,10 @@ public class MemberController {
         return memberService.save(member);
     }
 
-
     @GetMapping("/checkEmailToken")
     public void checkEmailToken(String token, String email) {
         memberService.checkEmailToken(token, email);
     }
-
 
 
 }

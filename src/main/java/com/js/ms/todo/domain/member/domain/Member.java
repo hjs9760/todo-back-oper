@@ -75,15 +75,8 @@ public class Member {
     @NotNull
     private LocalDateTime joinAt;
 
-
-    public String generateEmailCheckToken() {
-        return this.emailCheckToken = UUID.randomUUID().toString();
-    }
-
-
     public void convertEmailCheck(boolean state) {
         this.emailCheck = state;
-        this.joinAt = LocalDateTime.now();
     }
 
     public Member(String email, String oauthId, String name, String providerName, String accessToken, String refreshToken) {
