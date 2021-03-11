@@ -24,13 +24,14 @@ public class JWTGenerator {
     }
 
     public static String generate(Long dbPK, String email, Role role) {
-        return JWTUtils.createToken(createClaim(dbPK, email), createExpiresAt(), SECRET_KEY);
+        return JWTUtils.createToken(createClaim(dbPK, email, role), createExpiresAt(), SECRET_KEY);
     }
 
-    private static Map<String, String> createClaim(Long dbPK, String email) {
+    private static Map<String, String> createClaim(Long dbPK, String email, Role role) {
         Map<String, String> claimMap = new HashMap<>();
         claimMap.put("id", dbPK.toString());
         claimMap.put("email", email);
+        claimMap.put("role", role.getName());
         return claimMap;
     }
 }

@@ -40,7 +40,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             throw new UnAuthenticationException();
         }
 
-        // 인증하기 위한 토큰(id, pw)
+        // 인증을 위한 토큰 값(id, email, role)
         UsernamePasswordAuthenticationToken authentication = getAuthentication(token);
         // == @AuthenticationPrincipal
         SecurityContextHolder.getContext().setAuthentication(authentication);

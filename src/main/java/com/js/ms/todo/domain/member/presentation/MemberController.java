@@ -11,7 +11,6 @@ import com.js.ms.todo.global.config.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ObjectUtils;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +33,7 @@ public class MemberController {
 
 
     @PostMapping("/signUp")
-    public Response signUp(@Valid @RequestBody SignUpForm signUpForm, Errors errors) {
+    public Response signUp(@Valid @RequestBody SignUpForm signUpForm) {
         Member member = Member.builder()
                 .userId(signUpForm.getUserId())
                 .pw(passwordEncoder.encode(signUpForm.getPw()))
@@ -60,13 +59,8 @@ public class MemberController {
     }
 
     @PostMapping("/signIn")
-    public Response signIn(@Valid @RequestBody SignInForm signInForm, Errors errors) {
-        Member member = Member.builder()
-                .userId(signInForm.getUserId())
-                .pw(passwordEncoder.encode(signInForm.getPw()))
-                .build();
-
-        return memberService.save(member);
+    public Response signIn(@Valid @RequestBody SignInForm signInForm) {
+        return memberService.signIn(signInForm);
     }
 
     @GetMapping("/checkEmailToken")

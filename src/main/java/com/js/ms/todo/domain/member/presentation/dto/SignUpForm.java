@@ -24,7 +24,6 @@ public class SignUpForm {
     private String userId;
 
     @NotBlank
-    @Length(min = 8, max = 20)
     private String pw;
 
     @NotBlank
