@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/member/**").permitAll()
+                .antMatchers("/mail/**").permitAll()
 //                .antMatchers("/login").permitAll()
                 // 인증이 되어야 한다
                 .anyRequest().authenticated()

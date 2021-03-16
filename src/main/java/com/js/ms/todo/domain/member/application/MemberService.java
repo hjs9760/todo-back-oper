@@ -6,9 +6,9 @@ import com.js.ms.todo.domain.member.presentation.dto.SignInForm;
 import com.js.ms.todo.domain.member.presentation.dto.UserInfo;
 import com.js.ms.todo.global.config.Response.Response;
 import com.js.ms.todo.global.config.exception.ErrorCode;
-import com.js.ms.todo.global.config.exception.business.NotFoundException;
 import com.js.ms.todo.global.config.security.jwt.JWTGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +20,14 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public Response save(Member member) {
         if(!ObjectUtils.isEmpty(memberRepository.save(member))) {
             memberRepository.save(member);
-            return Response.of("200", "성공적으로 회원가입 되었습니다.");
+            this.eventPublisher.publishEvent(new MemberJoinedEvent(member));
+            return Response.of("200", "메일 인증후 회원가입이 이루어집니다.");
         } else {
             return Response.of(ErrorCode.MEMBER_SIGNUP_FAIL);
         }
@@ -35,16 +37,7 @@ public class MemberService {
         return memberRepository.existsByUserId(userId);
     }
 
-    @Transactional
-    public void checkEmailToken(String token, String email) {
-        Member member = memberRepository.findByEmail(email);
 
-        if(member == null) {
-            throw new NotFoundException("등록된 이메일이 없습니다.");
-        } else {
-            member.convertEmailCheck(true);
-        }
-    }
     public Response signIn(SignInForm signInForm) {
         Member member = memberRepository.findByUserId(signInForm.getUserId());
 
