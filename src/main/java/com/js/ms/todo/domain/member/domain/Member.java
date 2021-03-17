@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -22,6 +24,10 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
+
+    @OneToMany(mappedBy = "member")
+    private List<MemberCategory> memberCategories= new ArrayList<>();
+
 
     @Column(unique = true)
     @Length(min = 4, max = 20)

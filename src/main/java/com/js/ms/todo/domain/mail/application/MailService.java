@@ -34,7 +34,6 @@ public class MailService {
         return Response.of("200", "이메일로 인증코드를 전송 했습니다.");
     }
 
-    @Transactional
     public Response checkEmail(String userId, String  emailCheckToken) {
         Member member = memberRepository.findByUserId(userId);
 
