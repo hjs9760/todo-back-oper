@@ -27,7 +27,7 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, orphanRemoval = true)
     @Builder.Default private List<MemberCategory> memberCategories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", orphanRemoval = true)
     private List<Section> sections = new ArrayList<>();
 
     @Column

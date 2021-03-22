@@ -29,7 +29,7 @@ public class CategoryService {
     private final MemberRepository memberRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryInfo> findCategory(Long memberId) {
+    public Response findCategory(Long memberId) {
         List<MemberCategory> memberCategories = memberCategoryRepository.findByMemberId(memberId);
         List<CategoryInfo> categoryInfos = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class CategoryService {
             categoryInfos.add(CategoryInfo.convertFrom(category));
         }
 
-        return categoryInfos;
+        return Response.of("200", categoryInfos);
     }
 
     @Transactional
@@ -50,11 +50,8 @@ public class CategoryService {
                 .endDate(dto.getEndDate())
                 .build();
 
-
-
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new UnAuthenticationException());
         category.addMemberCategoryInfo(member);
-
 
         if (!ObjectUtils.isEmpty(categoryRepository.save(category))) {
             return Response.of("200", "카테고리가 생성 되었습니다.");

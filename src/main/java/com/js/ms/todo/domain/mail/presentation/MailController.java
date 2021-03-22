@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mail")
+@RequestMapping(value = "/mail", produces="application/json;charset=UTF-8")
 @RequiredArgsConstructor
 public class MailController {
 

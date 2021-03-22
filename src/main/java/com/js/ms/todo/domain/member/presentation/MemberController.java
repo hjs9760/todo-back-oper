@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping(value = "/member", produces="application/json;charset=UTF-8")
 @RequiredArgsConstructor
 public class MemberController {
 

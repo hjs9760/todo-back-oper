@@ -41,6 +41,7 @@ public class MemberService {
         Member member = memberRepository.findByUserId(signInForm.getUserId());
 
         if(!member.isEmailCheck()) {
+            //todo : 인증 코드 재전송
             return Response.of(ErrorCode.MEMBER_SIGNUP_EMAIL_FAIL);
         } else if(passwordEncoder.matches(signInForm.getPw(), member.getPw())) {
             return Response.of(ErrorCode.MEMBER_AUTHENTICATION_FAIL);
