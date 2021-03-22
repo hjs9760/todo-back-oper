@@ -25,4 +25,12 @@ public class MemberCategory {
     @JoinColumn(name = "category_id")
     private Category category;
 
+
+    public static MemberCategory createMemberCategory(Category category, Member member) {
+        MemberCategory memberCategory = new MemberCategory();
+        memberCategory.member = member;
+        memberCategory.category = category;
+
+        return memberCategory;
+    }
 }

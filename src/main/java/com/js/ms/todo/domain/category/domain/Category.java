@@ -1,11 +1,13 @@
 package com.js.ms.todo.domain.category.domain;
 
+import com.js.ms.todo.domain.category.presentation.dto.CategoryUpdateForm;
+import com.js.ms.todo.domain.member.domain.Member;
 import com.js.ms.todo.domain.member.domain.MemberCategory;
 import com.js.ms.todo.domain.section.domain.Section;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,8 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @OneToMany(mappedBy = "category")
-    private List<MemberCategory> memberCategories = new ArrayList<>();
+    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @Builder.Default private List<MemberCategory> memberCategories = new ArrayList<>();
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Section> sections = new ArrayList<>();
@@ -31,13 +33,26 @@ public class Category {
     @Column
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private String content;
+    private Status status;
 
     @Column
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
+    public void addMemberCategoryInfo(Member member) {
+        MemberCategory memberCategory = MemberCategory.createMemberCategory(this, member);
+
+        this.memberCategories.add(memberCategory);
+    }
+
+    public void update(CategoryUpdateForm dto) {
+        this.name = dto.getName();
+        this.status = dto.getStatus();
+        this.startDate = dto.getStartDate();
+        this.endDate = dto.getEndDate();
+    }
 }

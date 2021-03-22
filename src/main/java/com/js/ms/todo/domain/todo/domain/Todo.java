@@ -4,9 +4,7 @@ import com.js.ms.todo.domain.section.domain.Section;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.File;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Builder
@@ -32,7 +30,11 @@ public class Todo {
     private String content;
 
     @Column
-    private List<File> fileList;
+    private String priority;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Status status;
 
     @Column
     private LocalDateTime startDate;

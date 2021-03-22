@@ -24,7 +24,13 @@ public enum ErrorCode {
     // 인가 예외
     MEMBER_AUTHORIZATION_DENIED("B002", "Member AUTHORIZATION Exception"),
     // 회원가입 후 이메일 인증 예외
-    MEMBER_SIGNUP_EMAIL_FAIL("B003", "이메일 인증에 실패했습니다. \n인증해 주세요.");
+    MEMBER_SIGNUP_EMAIL_FAIL("B003", "이메일 인증에 실패했습니다. \n인증해 주세요."),
+
+    // Category
+    // 카테고리 생성 예외
+    CATEGORY_SAVE_FAIL("C00", "카테고리 생성에 실패했습니다."),
+    // 카테고리 접 예외
+    CATEGORY_AUTH_FAIL("C01", "해당 카테고리 접근권한이 없습니다.");
 
 
     private String code;
