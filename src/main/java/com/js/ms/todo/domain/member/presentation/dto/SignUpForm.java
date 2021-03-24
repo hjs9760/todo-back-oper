@@ -4,14 +4,12 @@ package com.js.ms.todo.domain.member.presentation.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -30,7 +28,6 @@ public class SignUpForm {
     private String name;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth;
 
     @NotBlank

@@ -3,7 +3,6 @@ package com.js.ms.todo.domain.category.presentation.dto;
 import com.js.ms.todo.domain.category.domain.Status;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -22,10 +21,8 @@ public class CategoryUpdateForm {
     @NotNull
     private Status status;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
 //    private List<MemberCategoryUpdateForm> memberCategoryUpdateForms;

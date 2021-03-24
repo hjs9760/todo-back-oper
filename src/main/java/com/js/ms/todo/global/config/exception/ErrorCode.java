@@ -34,9 +34,15 @@ public enum ErrorCode {
 
     // Category
     // 섹션 생성 예외
-    SECTION_SAVE_FAIL("D01", "섹션 생성에 실패했습니다."),
+    SECTION_SAVE_FAIL("D00", "섹션 생성에 실패했습니다."),
     // 섹션 수정 실패
-    SECTION_UPDATE_FAIL("D03", "섹션 수정에 실패했습니다.");
+    SECTION_UPDATE_FAIL("D01", "섹션 수정에 실패했습니다."),
+
+    // TodoList
+    // 할일 생성 예외
+    TODO_SAVE_FAIL("E00", "할일 생성에 실패했습니다."),
+    // 할일 수정 예외
+    TODO_UPDATE_FAIL("E01", "할일 수정에 실패했습니다.");
 
     private String code;
     private String message;

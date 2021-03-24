@@ -28,7 +28,7 @@ public class Category {
     @Builder.Default private List<MemberCategory> memberCategories = new ArrayList<>();
 
     @OneToMany(mappedBy = "category", orphanRemoval = true)
-    private List<Section> sections = new ArrayList<>();
+    @Builder.Default private List<Section> sections = new ArrayList<>();
 
     @Column
     private String name;
