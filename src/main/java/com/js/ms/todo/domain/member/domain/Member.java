@@ -26,7 +26,7 @@ public class Member {
     private Long id;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<MemberCategory> memberCategories= new ArrayList<>();
+    @Builder.Default private List<MemberCategory> memberCategories= new ArrayList<>();
 
 
     @Column(unique = true)

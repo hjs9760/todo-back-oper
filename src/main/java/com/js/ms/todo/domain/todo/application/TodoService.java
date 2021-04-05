@@ -1,9 +1,13 @@
 package com.js.ms.todo.domain.todo.application;
 
+import com.js.ms.todo.domain.category.domain.Category;
+import com.js.ms.todo.domain.category.domain.MemberCategoryRepository;
+import com.js.ms.todo.domain.member.domain.MemberCategory;
 import com.js.ms.todo.domain.section.domain.Section;
 import com.js.ms.todo.domain.section.domain.SectionRepository;
 import com.js.ms.todo.domain.todo.domain.Todo;
 import com.js.ms.todo.domain.todo.domain.TodoRepository;
+import com.js.ms.todo.domain.todo.presentation.dto.TodoFindForm;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoInfo;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoSaveForm;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoUpdateForm;
@@ -24,6 +28,7 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
     private final SectionRepository sectionRepository;
+    private final MemberCategoryRepository memberCategoryRepository;
 
     @Transactional
     public Response save(TodoSaveForm dto) {
@@ -75,6 +80,39 @@ public class TodoService {
 
         for (Todo todo : todos) {
             todoInfos.add(TodoInfo.convertFrom(todo));
+        }
+
+        return Response.of("200", todoInfos);
+    }
+
+    @Transactional(readOnly = true)
+    public Response findTodoByStatusAndDate(Long memberId, TodoFindForm todoFindForm) {
+        List<MemberCategory> memberCategories = memberCategoryRepository.findByMemberId(memberId);
+        List<TodoInfo> todoInfos = new ArrayList<>();
+
+
+        if(!ObjectUtils.isEmpty(todoFindForm.getStatus())) {
+            for (MemberCategory memberCategory : memberCategories) {
+                Category category = memberCategory.getCategory();
+                List<Section> sections = sectionRepository.findByCategoryId(category.getId());
+                for (Section section : sections) {
+                    List<Todo> todos = todoRepository.findBySectionIdAndStatusAndEndDateBetween(section.getId(), todoFindForm.getStatus(), todoFindForm.getStartDate(), todoFindForm.getEndDate());
+                    for (Todo todo : todos) {
+                        todoInfos.add(TodoInfo.convertFrom(todo));
+                    }
+                }
+            }
+        } else {
+            for (MemberCategory memberCategory : memberCategories) {
+                Category category = memberCategory.getCategory();
+                List<Section> sections = sectionRepository.findByCategoryId(category.getId());
+                for (Section section : sections) {
+                    List<Todo> todos = todoRepository.findBySectionIdAndEndDateBetween(section.getId(), todoFindForm.getStartDate(), todoFindForm.getEndDate());
+                    for (Todo todo : todos) {
+                        todoInfos.add(TodoInfo.convertFrom(todo));
+                    }
+                }
+            }
         }
 
         return Response.of("200", todoInfos);

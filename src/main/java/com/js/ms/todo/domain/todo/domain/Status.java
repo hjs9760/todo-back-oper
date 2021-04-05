@@ -5,17 +5,19 @@ import lombok.Getter;
 @Getter
 public enum Status {
 
-    PLAN("계획"),
-    PROGRESS("진행"),
-    COMPLETE("완료"),
-    PROBLEM("문제"),
-    HOLD("보류")
+    PLAN("계획", "whitesmoke"),
+    PROGRESS("진행", "green"),
+    COMPLETE("완료", "blue"),
+    PROBLEM("문제", "red"),
+    HOLD("보류", "grey")
     ;
 
     private String name;
+    private String color;
 
-    Status(String name) {
+    Status(String name, String color) {
         this.name = name;
+        this.color = color;
     }
 
 }

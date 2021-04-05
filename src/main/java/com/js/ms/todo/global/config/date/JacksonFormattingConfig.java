@@ -2,7 +2,6 @@ package com.js.ms.todo.global.config.date;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -39,6 +38,13 @@ public class JacksonFormattingConfig {
 			@Override
 			public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
 				return LocalDate.parse(p.getValueAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			}
+		});
+
+		module.addSerializer(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
+			@Override
+			public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+				gen.writeString(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(value));
 			}
 		});
 
