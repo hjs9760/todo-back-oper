@@ -49,12 +49,23 @@ public class Response {
         return response;
     }
 
-    public static Response of(String code, Object data, String token) {
+    public static Response of(String code, Object data, String message, String token) {
         Response response = new Response();
 
         response.code = code;
         response.data = data;
+        response.message = message;
         response.token = token;
+
+        return response;
+    }
+
+    public static Response of(String code, Object data, String message) {
+        Response response = new Response();
+
+        response.code = code;
+        response.data = data;
+        response.message = message;
 
         return response;
     }

@@ -18,6 +18,8 @@ public class TodoInfo {
 
     private String status;
 
+    private String statusName;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
@@ -31,7 +33,8 @@ public class TodoInfo {
         todoInfo.name = todo.getName();
         todoInfo.content = todo.getContent();
         todoInfo.priority = todo.getPriority();
-        todoInfo.status = todo.getStatus().getName();
+        todoInfo.status = todo.getStatus().toString();
+        todoInfo.statusName = todo.getStatus().getName();
         todoInfo.startDate = todo.getStartDate();
         todoInfo.endDate = todo.getEndDate();
         todoInfo.color = todo.getStatus().getColor();

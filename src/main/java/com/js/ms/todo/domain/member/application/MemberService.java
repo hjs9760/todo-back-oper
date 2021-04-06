@@ -58,7 +58,7 @@ public class MemberService {
                                 .email(member.getEmail())
                                 .build();
 
-            return Response.of("200", userInfo, jwt);
+            return Response.of("200", userInfo, null, jwt);
         }
 
     }

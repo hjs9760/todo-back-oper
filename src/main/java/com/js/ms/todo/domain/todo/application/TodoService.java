@@ -53,13 +53,14 @@ public class TodoService {
     @Transactional
     public Response update(TodoUpdateForm dto) {
         Todo todo = todoRepository.findById(dto.getTodoId()).orElseThrow(() -> new NotFoundException("해당 할일이 존재하지 않습니다."));
-        if (!ObjectUtils.isEmpty(todoRepository.findByName(dto.getName()))) {
+        Todo compareTodo = todoRepository.findByName(dto.getName());
+        if (todo.getId() != compareTodo.getId() && !ObjectUtils.isEmpty(todoRepository.findByName(dto.getName()))) {
             return Response.of(ErrorCode.DUPLICATE_ROW, "이미 존재하는 할일 명 입니다.");
         }
 
         todo.update(dto);
         if (!ObjectUtils.isEmpty(todoRepository.save(todo))) {
-            return Response.of("200", "할일이 수정 되었습니다.");
+            return Response.of("200", todo.getSection().getId(), "할일이 수정 되었습니다.");
         }
 
         return Response.of(ErrorCode.TODO_UPDATE_FAIL);
