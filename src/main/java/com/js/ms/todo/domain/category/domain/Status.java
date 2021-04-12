@@ -5,15 +5,17 @@ import lombok.Getter;
 @Getter
 public enum Status {
 
-    PROGRESS("진행"),
-    COMPLETE("완료"),
-    STATELESS("상태없음"),
+    PROGRESS("진행","green"),
+    COMPLETE("완료", "blue"),
+    STATELESS("상태없음", "grey"),
     ;
 
     private String name;
+    private String color;
 
-    Status(String name) {
+    Status(String name, String color) {
         this.name = name;
+        this.color = color;
     }
 
 }

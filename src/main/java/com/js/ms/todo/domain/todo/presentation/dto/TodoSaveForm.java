@@ -24,8 +24,10 @@ public class TodoSaveForm {
     @NotNull
     private Status status;
 
+    @NotNull
     private LocalDateTime startDate;
 
+    @NotNull
     private LocalDateTime endDate;
 
 }

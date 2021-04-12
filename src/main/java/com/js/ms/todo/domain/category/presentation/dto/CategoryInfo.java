@@ -25,17 +25,22 @@ public class CategoryInfo {
 
     private LocalDate endDate;
 
+    private String statusColor;
+
     public static CategoryInfo convertFrom(Category category) {
         CategoryInfo categoryInfo = new CategoryInfo();
 
         categoryInfo.id = category.getId();
         categoryInfo.name = category.getName();
-        for(Section section : category.getSections()) {
+        for (Section section : category.getSections()) {
             categoryInfo.sectionInfo.add(SectionInfo.convertFrom(section));
         }
         categoryInfo.status = category.getStatus();
         categoryInfo.startDate = category.getStartDate();
         categoryInfo.endDate = category.getEndDate();
+        for (Status status : Status.values()) {
+            if (category.getStatus().equals(status)) categoryInfo.statusColor = status.getColor();
+        }
 
         return categoryInfo;
     }
