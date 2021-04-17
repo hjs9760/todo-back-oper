@@ -8,9 +8,6 @@ import javax.validation.constraints.NotNull;
 public class SectionUpdateForm {
 
     @NotNull
-    private Long categoryId;
-
-    @NotNull
     private Long sectionId;
 
     @NotNull

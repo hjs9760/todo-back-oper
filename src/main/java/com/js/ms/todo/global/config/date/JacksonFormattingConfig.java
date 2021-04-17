@@ -48,6 +48,14 @@ public class JacksonFormattingConfig {
 			}
 		});
 
+		module.addSerializer(LocalDate.class, new JsonSerializer<LocalDate>() {
+			@Override
+			public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+				gen.writeString(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(value));
+			}
+		});
+
+
 		return module;
 	}
 }

@@ -26,7 +26,7 @@ public class Section {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "section")
+    @OneToMany(mappedBy = "section", orphanRemoval = true)
     @Builder.Default private List<Todo> todoList = new ArrayList<>();
 
     @Column

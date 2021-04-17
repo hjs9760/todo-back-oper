@@ -23,6 +23,8 @@ public class CategoryInfo {
 
     private LocalDate startDate;
 
+    private String statusName;
+
     private LocalDate endDate;
 
     private String statusColor;
@@ -36,6 +38,7 @@ public class CategoryInfo {
             categoryInfo.sectionInfo.add(SectionInfo.convertFrom(section));
         }
         categoryInfo.status = category.getStatus();
+        categoryInfo.statusName = category.getStatus().getName();
         categoryInfo.startDate = category.getStartDate();
         categoryInfo.endDate = category.getEndDate();
         for (Status status : Status.values()) {
