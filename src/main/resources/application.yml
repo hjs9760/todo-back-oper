@@ -5,8 +5,8 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/todo?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
-    username: root
-    password: 1234
+    username: ENC(Zu52UORZKgBQtefcIQ85vg==)
+    password: ENC(DfXDZvNDIdCOCy9XJmDqRw==)
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
   jpa:
@@ -35,9 +35,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: haru9760@gmail.com
-#    todo: application.yml 비번 암호화 하는 방법 or 운영 서버에 커밋시 비번은 들어가있는데 사용자에게 보이지 않게하는 방법 있는지
-    password: Korea123!!
+    username: ENC(4fkk2RYq2aEGZnZr5jMVkwhORo5DJ7Cz0zgqkAhXz1Y=)
+    password: ENC(iafd8gwVLLUCK0zkQeyarTDEQYLNvygF)
     properties:
       mail:
         smtp:
@@ -59,4 +58,9 @@ logging:
 
 
 mail:
-  username: "haru9760@gmail.com"
+  username: ENC(4fkk2RYq2aEGZnZr5jMVkwhORo5DJ7Cz0zgqkAhXz1Y=)
+
+
+jasypt:
+  encryptor:
+    bean: jasyptEncryptor
