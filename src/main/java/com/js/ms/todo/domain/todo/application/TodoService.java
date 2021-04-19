@@ -5,6 +5,7 @@ import com.js.ms.todo.domain.category.domain.MemberCategoryRepository;
 import com.js.ms.todo.domain.member.domain.MemberCategory;
 import com.js.ms.todo.domain.section.domain.Section;
 import com.js.ms.todo.domain.section.domain.SectionRepository;
+import com.js.ms.todo.domain.todo.domain.Status;
 import com.js.ms.todo.domain.todo.domain.Todo;
 import com.js.ms.todo.domain.todo.domain.TodoRepository;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoFindForm;
@@ -92,7 +93,7 @@ public class TodoService {
         List<TodoInfo> todoInfos = new ArrayList<>();
 
 
-        if(!ObjectUtils.isEmpty(todoFindForm.getStatus())) {
+        if (!ObjectUtils.isEmpty(todoFindForm.getStatus())) {
             for (MemberCategory memberCategory : memberCategories) {
                 Category category = memberCategory.getCategory();
                 List<Section> sections = sectionRepository.findByCategoryId(category.getId());
@@ -118,4 +119,37 @@ public class TodoService {
 
         return Response.of("200", todoInfos);
     }
+
+    public Response findTodoByStatus(Long memberId, Status status) {
+        List<MemberCategory> memberCategories = memberCategoryRepository.findByMemberId(memberId);
+        List<TodoInfo> todoInfos = new ArrayList<>();
+
+        if (String.valueOf(status).equals("ALL")) {
+            for (MemberCategory memberCategory : memberCategories) {
+                Category category = memberCategory.getCategory();
+                List<Section> sections = sectionRepository.findByCategoryId(category.getId());
+                for (Section section : sections) {
+                    List<Todo> todos = todoRepository.findBySectionId(section.getId());
+                    for (Todo todo : todos) {
+                        todoInfos.add(TodoInfo.convertFrom(todo));
+                    }
+                }
+            }
+        } else {
+            for (MemberCategory memberCategory : memberCategories) {
+                Category category = memberCategory.getCategory();
+                List<Section> sections = sectionRepository.findByCategoryId(category.getId());
+                for (Section section : sections) {
+                    List<Todo> todos = todoRepository.findBySectionIdAndStatus(section.getId(), status);
+                    for (Todo todo : todos) {
+                        todoInfos.add(TodoInfo.convertFrom(todo));
+                    }
+                }
+            }
+        }
+
+
+        return Response.of("200", todoInfos);
+    }
+
 }

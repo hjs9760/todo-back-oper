@@ -1,6 +1,7 @@
 package com.js.ms.todo.domain.todo.presentation;
 
 import com.js.ms.todo.domain.todo.application.TodoService;
+import com.js.ms.todo.domain.todo.domain.Status;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoFindForm;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoSaveForm;
 import com.js.ms.todo.domain.todo.presentation.dto.TodoUpdateForm;
@@ -47,5 +48,10 @@ public class TodoController {
     @PostMapping("/findAll")
     public Response findTodoByStatusAndDate(@AuthenticationPrincipal Long memberId, @RequestBody TodoFindForm todoFindForm) {
         return todoService.findTodoByStatusAndDate(memberId, todoFindForm);
+    }
+
+    @GetMapping("/findByStatus/{status}")
+    public Response findTodoByStatus(@AuthenticationPrincipal Long memberId, @PathVariable Status status) {
+        return todoService.findTodoByStatus(memberId, status);
     }
 }

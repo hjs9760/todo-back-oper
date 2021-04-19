@@ -14,4 +14,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     List<Todo> findBySectionIdAndStatusAndEndDateBetween(Long id, Status status, LocalDateTime startDate, LocalDateTime endDate);
 
     List<Todo> findBySectionIdAndEndDateBetween(Long id, LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Todo> findBySectionIdAndStatus(Long id, Status status);
 }
