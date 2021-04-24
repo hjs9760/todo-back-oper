@@ -17,7 +17,5 @@ public class TodoApplication implements CommandLineRunner {
         StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
         pbeEnc.setAlgorithm("PBEWithMD5AndDES");
         pbeEnc.setPassword("todoEncrypt"); //JasyptConfig 설정의 암호화 키
-
-        System.out.println("홍정선");
     }
 }
